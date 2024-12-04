@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "options": {
+        "cwd": "${workspaceFolder}/build"
+    },
+    "tasks": [
+        {
+            "label": "cmake",
+            "type": "shell",
+            "command": "cmake",
+            "args": [".."],
+        },
+        {
+            "label": "make",
+            "type": "shell",
+            "command": "cmake",
+            "args": ["--build", "."]
+        },
+        {
+            "label": "Build",
+            "dependsOrder": "sequence",
+            "dependsOn":[
+                "cmake",
+                "make"
+            ],
+        },
+        {
+            "label": "echo",
+            "type": "shell",
+            "command": "cat",
+            "args": ["../test/output.s"]
+        },
+        {
+            "label": "compile",
+            "type": "shell",
+            "command": "gcc",
+            "args": ["-m32", "-no-pie", "../test/output.s", "-o", "../test/output"],
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "command": "../test/output",
+            "dependsOn":[
+                "echo",
+                "compile"
+            ]
+        },
+    ]
+}
